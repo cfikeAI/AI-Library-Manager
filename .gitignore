@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+
+# Images and data
+cover_images/
+uploaded_images/
+flagged/
+
+# SQLite database (optional, if you don’t want to expose the DB)
+library.db
+sql.py
+Library - Sheet1.csv
+Library_Enriched.csv

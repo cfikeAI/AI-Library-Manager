@@ -1,0 +1,8 @@
+pandas
+requests
+gradio
+sentence-transformers
+scikit-learn
+protobuf==3.20.3
+pillow
+sqlite3
