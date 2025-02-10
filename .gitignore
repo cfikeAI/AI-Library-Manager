@@ -17,3 +17,6 @@ library.db
 sql.py
 Library - Sheet1.csv
 Library_Enriched.csv
+
+# BAT scripts
+AI_Library.bat
