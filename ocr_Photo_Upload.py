@@ -3,6 +3,7 @@ import sqlite3
 import requests
 from PIL import Image
 import pytesseract
+import io
 import gradio as gr
 
 # Ensure Tesseract is installed and added to PATH, or specify the path manually
@@ -69,9 +70,20 @@ def insert_new_book(metadata, new_img_path):
     return f"New book '{metadata['title']}' by {metadata['author']} added to the database."
 
 # Extract text from book cover using OCR
-def extract_text_from_image(img):
-    text = pytesseract.image_to_string(img)
-    return text
+def extract_text_from_image(img_file):
+    try:
+        # Convert the uploaded file into an image using Pillow
+        # Reset file pointer to the start before reading
+        img_file.seek(0)
+        
+        image = Image.open(io.BytesIO(img_file.read()))
+        
+        # Perform OCR with pytesseract
+        text = pytesseract.image_to_string(image)
+        
+        return text
+    except Exception as e:
+        raise ValueError(f"Unsupported image object: {e}")
 
 # Gradio interface function
 def process_image(image, api_key=None):
