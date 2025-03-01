@@ -42,7 +42,7 @@ def fetch_new_books(query, existing_titles, api_key=None, top_n=3, bestseller_bi
     else:
         return f"Failed to fetch data from Google Books API. Status Code: {response.status_code}"
 
-# Generate book recommendations based on description similarity
+# Generate book recommendations based on description similarity - TF-IDF vectorization
 def generate_recommendations(book_title, df, api_key=None, top_n=3):
     tfidf = TfidfVectorizer(stop_words='english')
     tfidf_matrix = tfidf.fit_transform(df['description'])

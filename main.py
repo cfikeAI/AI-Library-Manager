@@ -5,7 +5,7 @@ import pandas as pd
 import io
 
 import ocr_Photo_Upload  # Make sure this matches the filename
-import bookrec2  # Make sure this matches the filename
+import book_Recommendations  # Make sure this matches the filename
 import bookRating  # Make sure this matches the filename
 import stats # Make sure this matches the filename
 
@@ -77,7 +77,7 @@ def main():
                 ocr_Photo_Upload.photo_upload_interface()
 
             with gr.TabItem("Book Recommendations"):
-                bookrec2.recommendation_interface()
+                book_Recommendations.recommendation_interface()
 
             database_viewer_interface()  # Attach and render directly in the Tabs
             bookRating.rate_books_interface()  # New tab for rating books

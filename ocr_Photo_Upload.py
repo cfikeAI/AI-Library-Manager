@@ -6,8 +6,10 @@ import pytesseract
 import io
 import gradio as gr
 
-# Ensure Tesseract is installed and added to PATH, or specify the path manually
-pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
+import os
+import pytesseract
+
+
 
 # Create directory for uploaded images
 UPLOAD_FOLDER = 'uploaded_images'
@@ -70,15 +72,16 @@ def insert_new_book(metadata, new_img_path):
     return f"New book '{metadata['title']}' by {metadata['author']} added to the database."
 
 # Extract text from book cover using OCR
-def extract_text_from_image(img_file):
+def extract_text_from_image(image):
     try:
-        # Convert the uploaded file into an image using Pillow
-        # Reset file pointer to the start before reading
-        img_file.seek(0)
+        # ✅ Ensure the image is a PIL Image
+        if isinstance(image, bytes):
+            image = Image.open(io.BytesIO(image))  # Convert bytes to PIL Image
         
-        image = Image.open(io.BytesIO(img_file.read()))
-        
-        # Perform OCR with pytesseract
+        elif not isinstance(image, Image.Image):  # If it's not already a PIL image
+            raise ValueError("Unsupported image object. Expected a valid image.")
+
+        # ✅ Perform OCR with pytesseract
         text = pytesseract.image_to_string(image)
         
         return text
