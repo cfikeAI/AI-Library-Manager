@@ -1,18 +1,29 @@
-#Use Python 3.10 as base image
-FROM python:3.10
+# Use slim Python base image
+FROM python:3.10-slim
 
-#Set Working directory inside the container
+# Set working directory
 WORKDIR /app
 
-#Copy project files into container
-COPY . /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-#Install Dependencies
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+# Copy dependency files
+COPY requirements.txt .
 
-#Expose FastAPI port
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy your app code
+COPY . .
+
+# Expose port
 EXPOSE 8000
 
-#Run FastAPI app
-CMD ["uvicorn", "fastapi_library_app:app", "--host", "--port", "8000"]
+# Run FastAPI app
+CMD ["uvicorn", "fastapi_library_app:app", "--host", "0.0.0.0", "--port", "8000"]
