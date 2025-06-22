@@ -83,7 +83,7 @@ def main():
             bookRating.rate_books_interface()  # New tab for rating books
             stats.reading_statistics_interface() # Tab for reading statistics
 
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
 
 if __name__ == "__main__":
     main()
