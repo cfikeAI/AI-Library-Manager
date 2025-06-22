@@ -14,6 +14,7 @@ flagged/
 
 # SQLite database (optional, if you don’t want to expose the DB)
 library.db
+shared/library.db
 sql.py
 Library - Sheet1.csv
 Library_Enriched.csv
