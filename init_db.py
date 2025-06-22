@@ -6,7 +6,7 @@ import sqlite3
 import sqlite3
 import os
 
-DB_PATH = "library.db"
+DB_PATH = "shared/library.db"
 
 if os.path.exists(DB_PATH):
     print("'library.db' already exists. Delete it if you want to recreate.")
@@ -19,13 +19,17 @@ cursor = conn.cursor()
 cursor.execute("""
 CREATE TABLE books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
+    title TEXT,
     author TEXT,
-    year INTEGER,
+    published_date TEXT,
+    publisher TEXT,
+    page_count INTEGER,
+    categories TEXT,
     description TEXT,
-    genre TEXT,
     rating REAL,
-    date_added TEXT
+    ratings_count INTEGER,
+    isbn TEXT,
+    cover_image_path TEXT
 )
 """)
 
