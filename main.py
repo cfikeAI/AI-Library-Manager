@@ -3,6 +3,7 @@ import sqlite3
 from PIL import Image
 import pandas as pd
 import io
+import os
 
 import ocr_Photo_Upload  # Make sure this matches the filename
 import book_Recommendations  # Make sure this matches the filename
@@ -11,7 +12,8 @@ import stats # Make sure this matches the filename
 
 # Function to fetch books from the database
 def fetch_books():
-    conn = sqlite3.connect('library.db')
+    db_path = os.path.join(os.path.dirname(__file__), 'shared', 'library.db')
+    conn = sqlite3.connect(db_path)
     query = "SELECT * FROM books"  # Fetch all books
     df = pd.read_sql_query(query, conn)
     conn.close()

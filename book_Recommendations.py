@@ -10,7 +10,7 @@ import gradio as gr
 #(Simplified NLP with TF-IDF)
     
 # Load books from the database
-def load_books_from_db(db_path='library.db'):
+def load_books_from_db(db_path='shared/library.db'):
     conn = sqlite3.connect(db_path)
     query = "SELECT id, title, author, description, rating, ratings_count FROM books WHERE description IS NOT NULL"
     df = pd.read_sql_query(query, conn)

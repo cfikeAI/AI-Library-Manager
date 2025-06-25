@@ -9,7 +9,7 @@ import io
 
 # Function to fetch books from the database
 def fetch_books():
-    conn = sqlite3.connect('library.db')
+    conn = sqlite3.connect('shared/library.db')
     query = "SELECT * FROM books"  # Fetch all books
     df = pd.read_sql_query(query, conn)
     conn.close()
@@ -20,7 +20,7 @@ def rate_books_interface():
     books_df = fetch_books()
 
     def update_rating(selected_title, rating):
-        conn = sqlite3.connect('library.db')
+        conn = sqlite3.connect('shared/library.db')
         cursor = conn.cursor()
         cursor.execute("UPDATE books SET rating = ? WHERE title = ?", (rating, selected_title))
         conn.commit()

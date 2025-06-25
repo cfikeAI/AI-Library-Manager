@@ -6,7 +6,7 @@ from collections import Counter
 
 # Fetch all books as a DataFrame
 def fetch_books():
-    conn = sqlite3.connect('library.db')
+    conn = sqlite3.connect('shared/library.db')
     try:
         df = pd.read_sql_query("SELECT * FROM books", conn)
     except Exception:

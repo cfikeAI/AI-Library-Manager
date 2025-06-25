@@ -47,7 +47,7 @@ def fetch_book_metadata(title, author, api_key=None):
 
 # Insert new book into the database
 def insert_new_book(metadata, new_img_path):
-    conn = sqlite3.connect('library.db')
+    conn = sqlite3.connect('shared/library.db')
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM books WHERE title = ? AND author = ?", (metadata['title'], metadata['author']))

@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to the database
-conn = sqlite3.connect('library.db')
+conn = sqlite3.connect('shared/library.db')
 cursor = conn.cursor()
 
 # Check if the books table exists

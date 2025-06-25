@@ -8,7 +8,7 @@ from collections import Counter
 
 # Function to fetch books from the database
 def fetch_books():
-    conn = sqlite3.connect('library.db')
+    conn = sqlite3.connect('shared/library.db')
     query = "SELECT * FROM books"  # Fetch all books
     df = pd.read_sql_query(query, conn)
     conn.close()

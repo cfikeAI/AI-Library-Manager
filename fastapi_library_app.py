@@ -88,7 +88,7 @@ class RatingInput(BaseModel):
 @app.post("/rate-book")
 def rate_book(data: RatingInput):
     try:
-        conn = sqlite3.connect("library.db")
+        conn = sqlite3.connect("shared/library.db")
         cursor = conn.cursor()
 
         # Check if the book exists
@@ -111,7 +111,7 @@ def rate_book(data: RatingInput):
 @app.get("/stats")
 def get_library_statistics():
     try:
-        conn = sqlite3.connect("library.db")
+        conn = sqlite3.connect("shared/library.db")
         df = pd.read_sql_query("SELECT * FROM books", conn)
         conn.close()
 
@@ -132,7 +132,7 @@ def get_library_statistics():
 @app.get("/books")
 def get_books():
     try:
-        conn = sqlite3.connect("library.db")
+        conn = sqlite3.connect("shared/library.db")
         df = pd.read_sql_query("SELECT title, author, rating FROM books", conn)
         conn.close()
         

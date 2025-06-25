@@ -12,7 +12,7 @@ image_folder = 'cover_images'
 os.makedirs(image_folder, exist_ok=True)
 
 # Set up SQLite database
-conn = sqlite3.connect('library.db')
+conn = sqlite3.connect('shared/library.db')
 cursor = conn.cursor()
 
 # Create books table if it doesn't exist
