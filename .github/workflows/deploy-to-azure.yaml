@@ -30,7 +30,7 @@ jobs:
       - name: Build and push Gradio image
         run: |
           docker build -f Dockerfile.gradio -t ailibraryacr.azurecr.io/ai-library-manager-gradio .
-    d     docker push ailibraryacr.azurecr.io/ai-library-manager-gradio
+          docker push ailibraryacr.azurecr.io/ai-library-manager-gradio
 
       - name: Set up kubectl
         uses: azure/aks-set-context@v3

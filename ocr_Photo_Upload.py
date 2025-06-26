@@ -5,6 +5,7 @@ from PIL import Image
 import pytesseract
 import io
 import gradio as gr
+import pandas
 
 import os
 import pytesseract
