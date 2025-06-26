@@ -1,0 +1,44 @@
+name: Deploy to Azure AKS
+
+on:
+  push:
+    branches:
+      - main  # or "master" if you use that
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure CLI – Log in to ACR
+        run: |
+          az acr login --name ailibraryacr
+
+      - name: Build and push FastAPI image
+        run: |
+          docker build -t ailibraryacr.azurecr.io/ai-library-manager-fastapi ./fastapi
+          docker push ailibraryacr.azurecr.io/ai-library-manager-fastapi
+
+      - name: Build and push Gradio image
+        run: |
+          docker build -t ailibraryacr.azurecr.io/ai-library-manager-gradio ./gradio
+          docker push ailibraryacr.azurecr.io/ai-library-manager-gradio
+
+      - name: Set up kubectl
+        uses: azure/aks-set-context@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          cluster-name: ai-library-cluster
+          resource-group: ai-library-manager-cfikeai
+
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f k8s/
