@@ -35,7 +35,6 @@ jobs:
       - name: Set up kubectl
         uses: azure/aks-set-context@v3
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
           cluster-name: ai-library-cluster
           resource-group: ai-library-manager-cfikeai
 
