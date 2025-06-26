@@ -1,80 +1,81 @@
 AI-Library-Manager
 
-A Scalable, ML-Integrated Personal Library System with Azure DevOps Deployment
-Overview
+A scalable, containerized book library app that extracts metadata from cover images, recommends similar titles, and tracks user reading behavior — deployed end-to-end with Azure AKS, GitHub Actions, and Docker.
+What It Does
 
-AI-Library-Manager is a modular, cloud-ready application designed for managing personal book collections using machine learning and DevOps best practices.
+    -Extracts book titles from cover images using OCR (Tesseract)
 
-Key capabilities include:
+    -Queries Google Books API to pull metadata automatically
 
-    Extracting book titles from cover images using OCR (Tesseract)
+    -Recommends similar books using TF-IDF vectorization
 
-    Fetching book metadata using the Google Books API
+    -Lets users rate and track their book collection
 
-    Recommending similar books using TF-IDF-based search
+    -Generates basic reading analytics (top authors, total read, etc.)
 
-    Tracking and rating books locally
+All services are containerized, orchestrated via Kubernetes, and deployed to Azure using an automated CI/CD pipeline.
+Tech Stack
+Layer	Tech
+Backend	FastAPI for RESTful metadata and recommendation API
+Frontend	Gradio interface for uploading covers, rating books, and analytics
+OCR	Tesseract (via pytesseract) for image-to-text
+ML	TF-IDF-based recommendation engine (scikit-learn)
+Database	SQLite (mounted volume for shared access across services)
+Infra	Docker + Kubernetes (Azure AKS) + GitHub Actions + ACR
+CI/CD	Full GitHub Actions pipeline for auto-deploying on main push
 
-    Providing analytics on reading behavior and trends
-
-This project integrates FastAPI, Gradio, Docker, Kubernetes, and Azure DevOps pipelines, showcasing real-world deployment workflows even for lightweight AI use cases.
-Technology Stack
-Component	Technology
-API Backend	FastAPI
-User Interface	Gradio
-OCR Engine	Tesseract
-Recommendation	TF-IDF with cosine similarity
-Database	SQLite
-Containerization	Docker
-Orchestration	Kubernetes (Azure AKS)
-CI/CD	GitHub Actions
-Infrastructure	Azure CLI-based provisioning
-Features
-
-    Upload book cover images to automatically extract titles via OCR
-
-    Metadata lookup using Google Books API
-
-    Intelligent recommendations based on similarity to user preferences
-
-    Book rating and collection tracking
-
-    Analytics including top authors, total books, and reading stats
-
-Local Installation
-1. Prerequisites
-
-    Python 3.10+
-
-    Tesseract OCR:
-
-        Windows: Tesseract Installation (UB Mannheim)
-
-        Ensure tesseract is added to system PATH
-
-        Verify installation:
-
-        tesseract --version
-
-2. Clone Repository and Install Dependencies
+              +-------------------+
+              |    User Uploads   |
+              |  Book Cover Image |
+              +-------------------+
+                       |
+                       v
+          +-------------------------+
+          |   Gradio Frontend (UI)  |
+          +-------------------------+
+                       |
+                       v
+      +----------------------------------+
+      |  FastAPI Backend (OCR + ML API)  |
+      +----------------------------------+
+             |                  |
+             |                  v
+             v         +------------------+
+     +-------------+   | Google Books API |
+     | SQLite DB   |   +------------------+
+     +-------------+
+Local Dev Setup
+1. Install Dependencies
 
 git clone https://github.com/cfikeAI/AI-Library-Manager.git
 cd AI-Library-Manager
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
-Azure Deployment (CI/CD + AKS)
+2. Install Tesseract
 
-All infrastructure was provisioned using Azure CLI commands, avoiding GUI configuration.
-API Reference (FastAPI)
-Endpoint	Method	Description
-/process-book/	POST	Upload image, extract title, fetch metadata
-/rate-book/	POST	Rate a book in the local database
-/books/	GET	Retrieve full book list
-/stats/	GET	Return collection analytics
-/recommend-books/	POST	Return recommendations via TF-IDF
-Example Request:
+    Ubuntu: sudo apt install tesseract-ocr
 
-{
-  "user_prefs": "Dune",
-  "method": "tfidf"
-}
+    Windows: Tesseract Install (UB Mannheim)
+
+Make sure tesseract is in your system path.
+
+
+Azure CI/CD Pipeline
+
+    Push to main triggers a full GitHub Actions pipeline
+
+    Docker images are built and pushed to Azure Container Registry (ACR)
+
+    Kubernetes manifests (/k8s/) are automatically applied via kubectl
+
+    App is deployed to Azure AKS with zero manual interaction
+
+Secrets managed via AZURE_CREDENTIALS in GitHub Actions.
+API Reference
+Method	Endpoint	Description
+POST	/process-book/	Upload cover image → OCR → metadata
+POST	/rate-book/	Rate book and store locally
+GET	/books/	List all books
+GET	/stats/	Show top authors, total books, etc
+POST	/recommend-books/	Recommend books using TF-IDF
