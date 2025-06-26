@@ -1,63 +1,78 @@
-# AI-Library-Manager
-ML-Powered Personal Library Management System
+AI-Library-Manager
 
-# Overview
--Scans book covers via image files utilizing OCR (Tesseract)
--Automatically fetch metadata via Google Books API
--Get AI-powered book recommendations using TF-IDF vectorization
--Rate and manage personal book collections
--Analyze reading habits with ML-powered statistics
+A Scalable, ML-Integrated Personal Library System with Azure DevOps Deployment
+Overview
 
-This project integrates FastAPI, Machine Learning, and MLOps tools for a scalable, real-world AI
-application.
+AI-Library-Manager is a modular, cloud-ready application designed for managing personal book collections using machine learning and DevOps best practices.
 
-## Tach Stack
-- FastAPI: REST API for book management & AI recommendations
-- Gradio: Web UI for interactive book management
-- Tesseract OCR: Image-to-text extraction for book covers
-- SQLite: Local database storage
+Key capabilities include:
 
-## Installation Requirements
-1. Install Python 3.10+
+    Extracting book titles from cover images using OCR (Tesseract)
 
-2. Clone Repository 
-    git clone "https://github.com/cfikeIT/AI-Library-Manager" 
-    cd AI-Library-Manager
+    Fetching book metadata using the Google Books API
 
-3. Install dependencies:
-    pip install -r requirements.txt
+    Recommending similar books using TF-IDF-based search
 
-4. This project requires Tesseract-OCR for image processing.
-    1. Download and install Tesseract from:
-       [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
-    2. Add `C:\Program Files\Tesseract-OCR` to your system PATH.
-    3. Verify installation with: tesseract --version
-5. Run FastAPI Server:
-    uvicorn fastapi_library_app:app --reload
+    Tracking and rating books locally
 
-6. Access at http://127.0.0.1:8000/docs
+    Providing analytics on reading behavior and trends
 
-### Alternative: Use Docker (No Installation Needed)
-Instead of installing Tesseract manually, you can run this project inside a **pre-configured Docker container**:
+This project integrates FastAPI, Gradio, Docker, Kubernetes, and Azure DevOps pipelines, showcasing real-world deployment workflows even for lightweight AI use cases.
+Technology Stack
+Component	Technology
+API Backend	FastAPI
+User Interface	Gradio
+OCR Engine	Tesseract
+Recommendation	TF-IDF with cosine similarity
+Database	SQLite
+Containerization	Docker
+Orchestration	Kubernetes (Azure AKS)
+CI/CD	GitHub Actions
+Infrastructure	Azure CLI-based provisioning
+Features
 
- 1. Build the Docker image:
-   docker build -t ai-library-manager .
- 2. Run the container:
-   docker run -p 8000:8000 ai-library-manager
- 3. Access API at: http://127.0.0.1:8000/doc
+    Upload book cover images to automatically extract titles via OCR
 
+    Metadata lookup using Google Books API
 
- ### API Endpoints
- Book Management:
- - POST /process-book/ - Uploads a book cover and fetches metadata
- - POST /rate-book/ - Updates book rating
- - GET /books/ - Fetches all books from the database
- - GET /stats/ - Returns reading statistics (total books, top authors)
+    Intelligent recommendations based on similarity to user preferences
 
- AI-Powered Recommendations:
- - POST /recommend-books/ - Get book recommendations based on AI models
- 
- Example Recommendation Request:
+    Book rating and collection tracking
+
+    Analytics including top authors, total books, and reading stats
+
+Local Installation
+1. Prerequisites
+
+    Python 3.10+
+
+    Tesseract OCR:
+
+        Windows: Tesseract Installation (UB Mannheim)
+
+        Ensure tesseract is added to system PATH
+
+        Verify installation:
+
+        tesseract --version
+
+2. Clone Repository and Install Dependencies
+
+git clone https://github.com/cfikeAI/AI-Library-Manager.git
+cd AI-Library-Manager
+pip install -r requirements.txt
+
+Azure Deployment (CI/CD + AKS)
+
+All infrastructure was provisioned using Azure CLI commands, avoiding GUI configuration.
+API Reference (FastAPI)
+Endpoint	Method	Description
+/process-book/	POST	Upload image, extract title, fetch metadata
+/rate-book/	POST	Rate a book in the local database
+/books/	GET	Retrieve full book list
+/stats/	GET	Return collection analytics
+/recommend-books/	POST	Return recommendations via TF-IDF
+Example Request:
 
 {
   "user_prefs": "Dune",
