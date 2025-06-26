@@ -24,13 +24,13 @@ jobs:
 
       - name: Build and push FastAPI image
         run: |
-          docker build -t ailibraryacr.azurecr.io/ai-library-manager-fastapi .
+          docker build -f Dockerfile.fastapi -t ailibraryacr.azurecr.io/ai-library-manager-fastapi .
           docker push ailibraryacr.azurecr.io/ai-library-manager-fastapi
 
       - name: Build and push Gradio image
         run: |
-          docker build -t ailibraryacr.azurecr.io/ai-library-manager-gradio .
-          docker push ailibraryacr.azurecr.io/ai-library-manager-gradio
+          docker build -f Dockerfile.gradio -t ailibraryacr.azurecr.io/ai-library-manager-gradio .
+    d     docker push ailibraryacr.azurecr.io/ai-library-manager-gradio
 
       - name: Set up kubectl
         uses: azure/aks-set-context@v3
