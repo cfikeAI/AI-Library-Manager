@@ -24,12 +24,12 @@ jobs:
 
       - name: Build and push FastAPI image
         run: |
-          docker build -t ailibraryacr.azurecr.io/ai-library-manager-fastapi ./fastapi
+          docker build -t ailibraryacr.azurecr.io/ai-library-manager-fastapi .
           docker push ailibraryacr.azurecr.io/ai-library-manager-fastapi
 
       - name: Build and push Gradio image
         run: |
-          docker build -t ailibraryacr.azurecr.io/ai-library-manager-gradio ./gradio
+          docker build -t ailibraryacr.azurecr.io/ai-library-manager-gradio .
           docker push ailibraryacr.azurecr.io/ai-library-manager-gradio
 
       - name: Set up kubectl
