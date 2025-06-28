@@ -71,11 +71,3 @@ Azure CI/CD Pipeline
 
     App is deployed to Azure AKS with zero manual interaction
 
-Secrets managed via AZURE_CREDENTIALS in GitHub Actions.
-API Reference
-Method	Endpoint	Description
-POST	/process-book/	Upload cover image → OCR → metadata
-POST	/rate-book/	Rate book and store locally
-GET	/books/	List all books
-GET	/stats/	Show top authors, total books, etc
-POST	/recommend-books/	Recommend books using TF-IDF
